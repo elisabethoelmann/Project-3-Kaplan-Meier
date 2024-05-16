@@ -5,14 +5,10 @@ import matplotlib.pyplot as plt
 
 # Your code goes here.
 
-# Create my data frame
-data = pd.DataFrame({
-    'Time': [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
-    'Event': [1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1],
-    'Group': ['Group A', 'Group A', 'Group A', 'Group A', 'Group B', 'Group B', 'Group B', 'Group B', 'Group B', 'Group B', 'Group B']
-   })
+# Load the data from the excel file into a DataFrame
+data = pd.read_excel('excel_data/exampledata.xlsx')
 
-# Create the KaplanMeier object and fit the data
+# Create the Kaplan-Meier object and fit the data
 
 kmf = KaplanMeierFitter()
 kmf.fit(data['Time'], data['Event'], label='Overall Survival')
