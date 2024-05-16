@@ -17,14 +17,34 @@ data = pd.DataFrame({
 kmf = KaplanMeierFitter()
 kmf.fit(data['Time'], data['Event'], label='Overall Survival')
 
-# plot the KaplanMeier curve
+# Split the data by groups
+groups = data['Group'].unique()
 
-fig, ax = plt.subplots()
-kmf.plot(ax=ax)
+# Create a new figure
+fig,ax = plt.subplots()
+
+# Plot seperate curves for each group
+for group in groups:
+    group_data = data[data['Group'] == group]
+    kmf.fit(group_data['Time'],group_data['Event'], label=group)
+    kmf.plot(ax=ax)
+
+# set labels and title for the plot
 ax.set_xlabel('Time')
 ax.set_ylabel('Survival Probability')
 ax.set_title('Kaplan-Meier Curve')
+
+# display legend
+ax.legend()
+
+# save and display the plot
 plt.savefig('km_plot.png')
+plt.show()
+
+
+
+
+
 
 
 
