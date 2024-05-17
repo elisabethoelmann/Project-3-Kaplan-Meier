@@ -38,7 +38,23 @@ ax.legend()
 plt.savefig('km_plot.png')
 plt.show()
 
+# Convert 'Time' and 'Event' columns to numeric tyoes if needed
+data['Time'] = pd.to_numeric(data['Time'], errors='coerce')
+data['Event'] = pd.to_numeric(data['Event'], errors='coerce')
 
+# Drop rows with missing values
+data = data.dropna(subset=['Time', 'Event'])
+
+# Calculate the median PFS for each group
+median_pfs_group_A = kmf.fit(data[data['Group Value'] == 1]['Time'], data[data['Group Value'] == 1]['Event']).median_survival_time_
+median_pfs_group_B = kmf.fit(data[data['Group Value'] == 2]['Time'], data[data['Group Value'] == 2]['Event']).median_survival_time_
+median_pfs_group_C = kmf.fit(data[data['Group Value'] == 3]['Time'], data[data['Group Value'] == 3]['Event']).median_survival_time_
+
+
+# print the result
+print("Median PFS for Group A:{:.2f}".format(median_pfs_group_A))
+print("Median PFS for Group B:{:.2f}".format(median_pfs_group_B))
+print("Median PFS for Group C:{:.2f}".format(median_pfs_group_C))
 
 
 
