@@ -7,7 +7,7 @@ import openpyxl
 # Your code goes here.
 
 # Load the data from the excel file into a DataFrame
-data = pd.read_excel('excel_data/exampledata.xlsx')
+data = pd.read_excel('excel_data/realdata.xlsx')
 
 # Create the Kaplan-Meier object and fit the data
 
