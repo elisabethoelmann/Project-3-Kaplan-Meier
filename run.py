@@ -3,11 +3,24 @@ import pandas as pd
 from lifelines import KaplanMeierFitter
 import matplotlib.pyplot as plt
 import openpyxl
+import gspread
+from google.oauth2.service_account import Credentials
+
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('Kaplan-Meier')
 
 # Your code goes here.
 
 # Load the data from the excel file into a DataFrame
-data = pd.read_excel('excel_data/realdata.xlsx')
+data = pd.read_excel('excel_data/realdata2.xlsx')
 
 # Create the Kaplan-Meier object and fit the data
 
