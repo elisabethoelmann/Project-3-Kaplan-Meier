@@ -20,7 +20,24 @@ SHEET = GSPREAD_CLIENT.open('Kaplan-Meier')
 # Your code goes here.
 
 # Load the data from the excel file into a DataFrame
-data = pd.read_excel('excel_data/realdata2.xlsx')
+# data = pd.read_excel('excel_data/realdata2.xlsx')
+
+# Function to retrieve data from the Google excel sheet
+def get_data_from_sheet():
+    sheet = SHEET.worksheet('ABC')
+    data = sheet.get_all_records()
+    df = pd.DataFrame(data)
+    return df
+
+# Function to process the data and return the DataFrame
+def process_data(df):
+    #convert 'Time' column to numeric
+    df['Time'] = pd.to_numeric(df['Time'],errors='coerce')
+    return df
+
+# Load the data from the online Google Excel sheet into a DataFrame
+data = get_data_from_sheet()
+
 
 # Create the Kaplan-Meier object and fit the data
 
