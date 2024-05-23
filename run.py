@@ -24,43 +24,10 @@ def get_data_from_sheet():
     df = pd.DataFrame(data)
     return df
 
-# Your code goes here.
-
-# Load the data from the excel file into a DataFrame
-# data = pd.read_excel('excel_data/realdata2.xlsx')
-
-ABC = SHEET.worksheet('ABC')
-data = ABC.get_all_values()
-print(data)
-
 #Load the data from the Google Excel sheet into a DataFrame
 data = get_data_from_sheet()
 
-#Function to process the data and return the DataFrame
-def process_data(df):
-    #Replace empty cells with NaN
-    df = df.replace(",",np.nan)
-    # convert 'Time' column to numeric
-    df['Time'] = pd.to_numeric(df['Time'], errors='coerce')
-    return df
-
-# process the data and store it in a new variable
-processed_df = process_data(data)
-
-#print the rownumber and column letter of empty cells
-for i, row in enumerate(data):
-    for j, cell in enumerate(row):
-        if not cell:
-            print(f"Empty cell found at row {i+1},column{chr(ord('A') + j)}")
-
-# Function to process the data and return the DataFrame
-def process_data(df):
-    #convert 'Time' column to numeric
-    df['Time'] = pd.to_numeric(df['Time'],errors='coerce')
-    return df
-
 # Create the Kaplan-Meier object and fit the data
-
 kmf = KaplanMeierFitter()
 kmf.fit(data['Time'], data['Event'], label='Overall Survival')
 
