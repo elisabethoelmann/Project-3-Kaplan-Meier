@@ -24,8 +24,38 @@ def get_data_from_sheet():
     df = pd.DataFrame(data)
     return df
 
+# Prompt user for new data input
+new_data = input("Please enter new survival data")
+new_data_a = []
+new_data_b = []
+new_data_c = []
+
+for i in range(13):
+    time_a = input("Enter Time for Group A:")
+    event_a = input("Enter Event for Group A:")
+    new_data_a.append((time_a, event_a))
+
+    time_b = input("Enter Time for Group B:")
+    event_b = input("Enter Event for Group B:")
+    new_data_b.append((time_b, event_b))
+
+    time_c = input("Enter Time for Group C:")
+    event_c = input("Enter Event for Group C:")
+    new_data_c.append((time_c, event_c))
+
+# Validate user input (eg., check for valid data types, decimal places, etc.)
+
+
 #Load the data from the Google Excel sheet into a DataFrame
 data = get_data_from_sheet()
+
+# Replace existing data with new user input:
+for i in range(13):
+    data.loc[(data['Group'] == 'A') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
+    data.loc[(data['Group'] == 'B') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
+    data.loc[(data['Group'] == 'C') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
+
+
 
 # Create the Kaplan-Meier object and fit the data
 kmf = KaplanMeierFitter()
