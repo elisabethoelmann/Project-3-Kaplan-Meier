@@ -27,6 +27,7 @@ def get_data_from_sheet():
 # Prompt user for new data input
 # Validation of user input (valid data for "time" 0-15 with max.1 decimal place and "event" valid data either 0 or 1)
 new_data = input("Please enter new survival data")
+data_str = input("Enter your data here:\n")
 new_data_a = []
 new_data_b = []
 new_data_c = []
