@@ -25,26 +25,60 @@ def get_data_from_sheet():
     return df
 
 # Prompt user for new data input
+# Validation of user input (valid data for "time" 0-15 with max.1 decimal place and "event" valid data either 0 or 1)
 new_data = input("Please enter new survival data")
 new_data_a = []
 new_data_b = []
 new_data_c = []
 
 for i in range(13):
-    time_a = input("Enter Time for Group A:")
-    event_a = input("Enter Event for Group A:")
+    while True:
+        time_a = input("Enter Time for Group A:")
+        if 0 <=float(time_a) <= 15 and time_a.count('.') <= 1:
+            break
+        else:
+            print("Invalid input. Please enter a number between 0-15 with 1 decimal place")
+
+    while True:
+        event_a = input("Enter Event for Group A:")
+        if event_a.isdigit() and int(event_a) in[0,1]:
+            break
+        else:
+            print("invalid input. Please enter either 0 or 1.")
+   
     new_data_a.append((time_a, event_a))
 
-    time_b = input("Enter Time for Group B:")
-    event_b = input("Enter Event for Group B:")
+    while True:
+        time_b = input("Enter Time for Group B:")
+        if 0 <=float(time_b) <=15 and time_b.count('.') <= 1:
+            break
+        else:
+            print("Invalid input. Please enter a number between 0-15 with 1 decimal place")
+    while True:
+        event_b = input("Enter Event for Group B:")
+        if event_b.isdigit() and int(event_b) in[0,1]:
+            break
+        else:
+            print("Invalid input. Please enter either 0 or 1")
+
     new_data_b.append((time_b, event_b))
 
-    time_c = input("Enter Time for Group C:")
-    event_c = input("Enter Event for Group C:")
+
+    while True:
+        time_c = input("Enter Time for Group C:")
+        if 0 <=float(time_c) <= 15 and time_c.count('.') <= 1:
+            break
+        else:
+            print("Invalid input. Please enter a number between 0-15 with 1 decimal place.")
+
+    while True:
+        event_c = input("Enter Event for Group C:")
+        if event_c.isdigit() and int(event_c) in[0,1]:
+            break
+        else:
+            print("Invalid input. Please enter either 0 or 1.")
+
     new_data_c.append((time_c, event_c))
-
-# Validate user input (eg., check for valid data types, decimal places, etc.)
-
 
 #Load the data from the Google Excel sheet into a DataFrame
 data = get_data_from_sheet()
@@ -54,8 +88,6 @@ for i in range(13):
     data.loc[(data['Group'] == 'A') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
     data.loc[(data['Group'] == 'B') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
     data.loc[(data['Group'] == 'C') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
-
-
 
 # Create the Kaplan-Meier object and fit the data
 kmf = KaplanMeierFitter()
