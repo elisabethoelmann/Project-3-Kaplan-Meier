@@ -125,9 +125,15 @@ data['Event'] = pd.to_numeric(data['Event'], errors='coerce')
 data = data.dropna(subset=['Time', 'Event'])
 
 # Calculate the median PFS for each group
-median_pfs_group_A = kmf.fit(data[data['Group Value'] == 1]['Time'], data[data['Group Value'] == 1]['Event']).median_survival_time_
-median_pfs_group_B = kmf.fit(data[data['Group Value'] == 2]['Time'], data[data['Group Value'] == 2]['Event']).median_survival_time_
-median_pfs_group_C = kmf.fit(data[data['Group Value'] == 3]['Time'], data[data['Group Value'] == 3]['Event']).median_survival_time_
+event = 'Event'
+
+group_A_data = data[data['Group Value'] == 1]
+group_B_data = data[data['Group Value'] == 2]
+group_C_data = data[data['Group Value'] == 3]
+
+median_pfs_group_A = kmf.fit(group_A_data['Time'], group_A_data[event]).median_survival_time_
+median_pfs_group_B = kmf.fit(group_B_data['Time'], group_B_data[event]).median_survival_time_
+median_pfs_group_C = kmf.fit(group_C_data['Time'], group_C_data[event]).median_survival_time_
 
 
 # print the result
