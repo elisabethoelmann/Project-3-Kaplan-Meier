@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from lifelines import KaplanMeierFitter
+from lifelines.statistics import logrank_test
+from lifelines.plotting import add_at_risk_counts
 import matplotlib.pyplot as plt
 import openpyxl
 import gspread
@@ -46,8 +48,11 @@ for i in range(13):
             break
         else:
             print("invalid input. Please enter either 0 or 1.")
-   
-    new_data_a.append((time_a, event_a))
+
+    if i < len(new_data_a):
+        new_data_a[i] = (time_a,event_a)
+    else:
+        new_data_a.append((time_a, event_a))
 
     while True:
         time_b = input("Enter Time for Group B:")
@@ -62,7 +67,10 @@ for i in range(13):
         else:
             print("Invalid input. Please enter either 0 or 1")
 
-    new_data_b.append((time_b, event_b))
+    if i < len(new_data_b):
+        new_data_b[i] = (time_b,event_b)
+    else:
+        new_data_b.append((time_b, event_b))
 
 
     while True:
@@ -79,16 +87,43 @@ for i in range(13):
         else:
             print("Invalid input. Please enter either 0 or 1.")
 
-    new_data_c.append((time_c, event_c))
+    if i < len(new_data_c):
+        new_data_c[i] = (time_c,event_c)
+    else:
+        new_data_c.append((time_c, event_c))
 
 #Load the data from the Google Excel sheet into a DataFrame
 data = get_data_from_sheet()
 
-# Replace existing data with new user input:
+# Replace existing data with new user input for all rows:
 for i in range(13):
-    data.loc[(data['Group'] == 'A') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
-    data.loc[(data['Group'] == 'B') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
-    data.loc[(data['Group'] == 'C') & (data.index ==i), ['Time', 'Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
+    #add the check for index range
+    if i<len(new_data_a):
+        data.loc[(data['Group'] == 'A') & (data.index == i),['Time','Event']] = [float(new_data_a[i][0]),bool(new_data_a[i][0])]
+    else:
+    # handle the case when out of range
+        print("Index out of range")
+
+for i in range(13):
+    #add the check for index range
+    if i<len(new_data_b):
+        data.loc[(data['Group'] == 'B') & (data.index == i),['Time','Event']] = [float(new_data_b[i][0]),bool(new_data_b[i][0])]
+    else:
+    # handle the case when out of range
+        print("Index out of range")
+
+for i in range(13):
+     #add the check for index range
+    if i<len(new_data_c):
+        data.loc[(data['Group'] == 'C') & (data.index == i),['Time','Event']] = [float(new_data_c[i][0]),bool(new_data_c[i][0])]
+    else:
+    # handle the case when out of range
+        print("Index out of range")
+
+
+# up-date the Google Excel sheet with the modified data
+worksheet = SHEET.worksheet('ABC')
+worksheet.update([data.columns.values.tolist()]+data.values.tolist())
 
 # Create the Kaplan-Meier object and fit the data
 kmf = KaplanMeierFitter()
@@ -118,7 +153,7 @@ ax.legend()
 plt.savefig('km_plot.png')
 plt.show()
 
-# Convert 'Time' and 'Event' columns to numeric tyoes if needed
+# Convert 'Time' and 'Event' columns to numeric types if needed
 data['Time'] = pd.to_numeric(data['Time'], errors='coerce')
 data['Event'] = pd.to_numeric(data['Event'], errors='coerce')
 
