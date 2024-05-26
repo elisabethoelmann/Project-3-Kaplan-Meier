@@ -58,7 +58,7 @@ The Google sheet contains the following data structure:
         - Group A = Group Value 1
         - Group B = Group Value 2
         - Group C = Group Value 3
-    - The "Time" column contains all the times, a single patient (each row of the groups) is on treatment or has been on treatment
+    - The "Time" column contains all the times, a single patient (each row of the groups) is on treatment or has been on treatment. The time unit is months (0-15 months)
     - The "Event" column contains the events:
         - if a patient has had already a progression event  and stopped treatment (value =1) or 
         - is still on treatment, which means this patient had no progression event yet (value =0)
@@ -75,7 +75,7 @@ Enter your data here:
 
 
 In the 2nd step, particulariy designed for this challenge, the user can enter new data directly into the terminal:
-- for "Time" the user can enter numbers between 0-15 and 
+- for "Time" the user can enter numbers between 0-15 and the unit is months
 - for "Events" either 1 or 0
 
 The user is prompted to enter 13 value pairs for group A, for group B and for group C. 
@@ -158,7 +158,7 @@ Part 1 of the code executes fine and the plot is up-dated with data form the Goo
 Unfortunately, they are then not up-loaded back into the Excel sheet due to this error message.
 For my use, I would anyway not enter data into the terminal. I would always up-date the Google Excel sheet directly with my new data, but I was aware, that the project assessors would require me to see the user input. The input works fine, only the up-load to the Excel sheet does not work, and I apologise for that mishap.
 
-I have decided to submit this project nevertheless, after discussing the code with my tutor last Thursday and his recommendation was, to submit the project even if I would face problems. He did not know at the time about this problem.
+I have decided to submit this project nevertheless, after discussing the code with my tutor last Thursday and his recommendation was, to submit the project even if I encountered problems. He did not know at the time about this particular problem.
 
 
 

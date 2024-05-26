@@ -112,7 +112,6 @@ for i in range(13):
             break
         else:
             print("Invalid input. Please enter a number between 0-15 with 1 decimal place")
-
     while True:
         event_a = input("Enter Event for Group A:")
         if event_a.isdigit() and int(event_a) in [0,1]:
@@ -142,7 +141,6 @@ for i in range(13):
             break
         else:
             print("Invalid input. Please enter a number between 0-15 with 1 decimal place.")
-
     while True:
         event_c = input("Enter Event for Group C:")
         if event_c.isdigit() and int(event_c) in [0,1]:
@@ -150,7 +148,6 @@ for i in range(13):
             break
         else:
             print("Invalid input. Please enter either 0 or 1.")
-
 
 # Replace existing data with new user input for all rows:
 # Update the data in the appropriate index range
@@ -176,7 +173,6 @@ for i, (data_a, data_b, data_c) in enumerate(zip(new_data_a, new_data_b, new_dat
         data.loc[(data['Group'] == 'C') & (data.index >= start_index_c) & (data.index <= end_index_c), ['Time', 'Event']] = [float(data_c[0]), int(data_c[1])]
     else:
         print("Index out of range for Group C")
-
 
 # up-date the Google Excel sheet with the modified data
 worksheet = SHEET.worksheet('ABC')
