@@ -1,6 +1,6 @@
 # Project-3-Kaplan-Meier
 This project is intended to help clinical scientists, to run a Kaplan-Meier curve for "Progression free survival" for cancer patients in clinical trials.
-The problem we are frequently facing, is that we need to rely on statitics and Clincal Research organizations (CROs) to analyse the data of our patients, whom we treat with certain drugs in clinical trials. This is always very costly and only happens at the very end of the clinical trial, when data are clean. However, it is urgently needed, that one can run such an analysis earlier as well.
+The problem we are frequently facing, is that we need to rely on statitics and Clincal Research Organizations (CROs) to analyse the data of our patients, whom we treat with certain drugs in clinical trials. This is always very costly and only happens at the very end of the clinical trial, when data are clean. However, it is urgently needed, that one can run such an analysis earlier as well.
 
 Therefore my aim was, with help of Python, to create such a plot, which one can run even on immature data.
 
@@ -15,14 +15,14 @@ This is called an "event".
 At that timepoint, the current treatment needs to be stopped and the next option of another combination of drugs will be started, again, to achieve a shrinkage of the tumour if possible, which would be called "response". If that happens, the patient will continue on the current treatment, as long as the patient tolerates it.
 In this scenario the patient experienced NO "event" means, the tumour did NOT grow
 
-In clinical trials, where new drugs against cancer are tested, this time while the patients receives 1 drug/or a combination of drugs for a certain period of time until the tumour starts growing again, is called PFS or progression free survival (progression is the professional term for "tumour growth").
+In clinical trials, where new drugs against cancer are tested, this time while the patient receives 1 drug/or a combination of drugs for a certain period of time until the tumour starts growing again, is called PFS or progression free survival (progression is the professional term for "tumour growth").
 
 * mPFS:
-In terms of statistics, when a group of patients receives a drug A and another group of patients receives drug B, physician/scientists and statistics are comparing the median time to progression (mPFS) of the tumours of all patients in group A against the growth of the tumours of all the patients in part B. Then the median will be calculated for all the PFS values from patients in group A and from group B and will be compared against each other
+In terms of statistics, when a group of patients receives a drug A and another group of patients receives drug B, physician/scientists and statistics are comparing the median time to progression (mPFS) of the tumours of all patients in group A against the growth of the tumours of all the patients in part B. Then the median will be calculated for all the PFS values from patients in group A and from group B and will be compared against each other. The conslusion then will be that drug A works better than drug B. The nest step is then to test of such results can also be achived in a larger patient population (with the same backrgound characterisitcs of their disease) and finally when the results can be confirmed a new drug achieves "Regulatory Approval"  by the FDA/EMEA and or other Health authorities and can then be marketed and therefore be given to all patients with this particular disease.
 
 * Event or no Event:
 As explained above, the progression of a tumour in a patient is called "event" and is normally counted as the number "1"
-If a patients continues on treatment, becauase a response to the treatment is achieved in this counted as "NO event" and gets assessed as the number zero "0".
+If a patients continues on treatment, because a response to the treatment is achieved, in this occasion this is counted as "NO event" and gets asigned the number zero "0".
 
 ### **Kaplan-Meier History**
 (https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator)
@@ -42,7 +42,7 @@ The Kaplan-Meier users are:
 
 It is not easy, to create a Kapan-Meier curve and there is currently nobody in this field of clinical research, beside organizations with stats departments, who would be able to run such a analysis and they do not do that on an ongoing basis. 
 The reason why this is important, is, that companies in drug development need to do long term planning for the next steps to be taken, in case the mPFS data would look promising for one of the arms for example. There is a lot of work required to prepare for these next steps.
-Therefore, if one could have an ongoing analysis of evolving data, even if they may be not yet statistically robust, it would be very helpful to at least understand the trend, in which the data are developing.
+Therefore, if one could have an ongoing analysis of evolving data, even if they may be not yet statistically robust, it would be very helpful to at least understand the trend, how the data are developing.
 
 ### **Structure**
 My Kaplan-Meier program allows exactly this ongoiing data analysis:
@@ -77,18 +77,14 @@ Enter your data here:
 In the 2nd step, particulariy designed for this challenge, the user can enter new data directly into the terminal:
 - for "Time" the user can enter numbers between 0-15 and 
 - for "Events" either 1 or 0
-If the user enters something else, that is a warning pops up to enter the correct data. 
-
-The finally the new data entered by the user would be up-loaded back into the google sheet and the previous numbers would be replaced by new data.
-After that step, the program can be restated and a new plot with the new data would be created.
 
 The user is prompted to enter 13 value pairs for group A, for group B and for group C. 
-- Enter Time for Group A:7.1 (these numbers are examples from one of my runs)
-- Enter Event for Group A:1
-- Enter Time for Group B:8.8
-- Enter Event for Group B:0
-- Enter Time for Group C:4.5
-- Enter Event for Group C:1
+![](docs_images/picture_terminal_results_user.png)
+
+If the user enters something else, a warning pops up, to enter the correct data. 
+
+Then finally, the new data entered by the user would be up-loaded back into the google sheet and the previous numbers would be replaced by new data.
+After that step, the program can be restarted and a new plot with the new data would be created.
 
 Therefore the program follows the following steps:
 
@@ -150,13 +146,16 @@ A great help also was ChatGPT, whenever, I got stuck.
 ## Further comments:
 Unfortunately I ran today into problems, which I could not solve in time, neither with the CI tutor support, nor with the help of ChatGPT.
 For unnknown reasons, the data for Group C, when entered by the user, are returning an error message, which I could not resolve.
-It looks like the follwoing steps from Part 2 of the code do not seem to work.
+It looks like the follwoing steps from Part 2 of the code do not seem to work properly
 - Update the data in the appropriate index range
 - up-date the Google Excel sheet with the modified data
 The error message is " Index out of range for Group C"
 Every other function works fine.
+Part 1 of the code executes fine and the plot is up-dated with data form the Google Sheet, the mPFS is calculated and the user can enter all the data.
+Unfortunately, they are then not up-loaded back into the Excel sheet due to this error message.
+For my use, I would anyway not enter data into the temrinal I would alwasy up-date the Google Excel sheet directly with my new dt=ata, but I was aware, that the project assessors would require to see user input. The input works fine, only the up-load to the Excel sheet does not.
 
-I have decided to submit this project nevertheless, after discussing the code with my tuotor last Thursday and his recommendation was, to submit the project even if I would face problems.
+I have decided to submit this project nevertheless, after discussing the code with my tutor last Thursday and his recommendation was, to submit the project even if I would face problems. He did not know at the time about this problem.
 
 
 
