@@ -80,6 +80,7 @@ In the 2nd step, particulariy designed for this challenge, the user can enter ne
 
 The user is prompted to enter 13 value pairs for group A, for group B and for group C. 
 ![](docs_images/picture_terminal_results_user.png)
+In this example here for practicability reason, I have copied only the 1st values pairs for each of the groups (6 in total).
 
 If the user enters something else, a warning pops up, to enter the correct data. 
 
@@ -149,11 +150,13 @@ For unnknown reasons, the data for Group C, when entered by the user, are return
 It looks like the follwoing steps from Part 2 of the code do not seem to work properly
 - Update the data in the appropriate index range
 - up-date the Google Excel sheet with the modified data
+
 The error message is " Index out of range for Group C"
+
 Every other function works fine.
 Part 1 of the code executes fine and the plot is up-dated with data form the Google Sheet, the mPFS is calculated and the user can enter all the data.
 Unfortunately, they are then not up-loaded back into the Excel sheet due to this error message.
-For my use, I would anyway not enter data into the temrinal I would alwasy up-date the Google Excel sheet directly with my new dt=ata, but I was aware, that the project assessors would require to see user input. The input works fine, only the up-load to the Excel sheet does not.
+For my use, I would anyway not enter data into the terminal. I would always up-date the Google Excel sheet directly with my new data, but I was aware, that the project assessors would require me to see the user input. The input works fine, only the up-load to the Excel sheet does not work, and I apologise for that mishap.
 
 I have decided to submit this project nevertheless, after discussing the code with my tutor last Thursday and his recommendation was, to submit the project even if I would face problems. He did not know at the time about this problem.
 
