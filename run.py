@@ -26,6 +26,78 @@ def get_data_from_sheet():
     df = pd.DataFrame(data)
     return df
 
+# First part of the code to draw a Kaplan-Meier curve form the existing data in the Google sheet and calculated mPFS 
+
+#Load the data from the Google Excel sheet into a DataFrame
+data = get_data_from_sheet()
+
+# Function to plot the Kaplan-Meier curve
+def plot_kaplan_meier_curve(data):
+    # Create the Kaplan-Meier object and fit the data
+    kmf = KaplanMeierFitter()
+    kmf.fit(data['Time'], data['Event'], label='Overall Survival')
+    return kmf
+
+# Call the plot_kaplan_meier_curve function with the loaded data
+plot_kaplan_meier_curve(data)
+kmf = plot_kaplan_meier_curve(data)
+
+# Split the data by groups
+groups = data['Group'].unique()
+
+# Create a new figure
+fig,ax = plt.subplots()
+
+# Plot seperate curves for each group
+for group in groups:
+    group_data = data[data['Group'] == group]
+    # Use the existing kmf object to fit and plot the curve
+    kmf.fit(group_data['Time'],group_data['Event'], label=group)
+    kmf.plot(ax=ax)
+
+# set labels and title for the plot
+ax.set_xlabel('Time')
+ax.set_ylabel('Survival Probability')
+ax.set_title('Kaplan-Meier Curve')
+
+# display legend
+ax.legend()
+
+# save and display the plot
+plt.savefig('km_plot.png')
+plt.show()
+
+# Convert 'Time' and 'Event' columns to numeric types if needed
+data['Time'] = pd.to_numeric(data['Time'], errors='coerce')
+data['Event'] = pd.to_numeric(data['Event'], errors='coerce')
+
+# Drop rows with missing values
+data = data.dropna(subset=['Time', 'Event'])
+
+# Function to calculate the median PFS for each group
+def calculate_median_pfs(data):
+    event = 'Event'
+    group_A_data = data[data['Group Value'] == 1]
+    group_B_data = data[data['Group Value'] == 2]
+    group_C_data = data[data['Group Value'] == 3]
+
+    kmf = KaplanMeierFitter()
+    median_pfs_group_A = kmf.fit(group_A_data['Time'], group_A_data[event]).median_survival_time_
+    median_pfs_group_B = kmf.fit(group_B_data['Time'], group_B_data[event]).median_survival_time_
+    median_pfs_group_C = kmf.fit(group_C_data['Time'], group_C_data[event]).median_survival_time_
+
+    return median_pfs_group_A, median_pfs_group_B, median_pfs_group_C
+
+# Calculate mPFS for each group
+median_pfs_group_A, median_pfs_group_B, median_pfs_group_C = calculate_median_pfs(data)
+
+# print the result
+print("Median PFS for Group A:{:.2f}".format(median_pfs_group_A))
+print("Median PFS for Group B:{:.2f}".format(median_pfs_group_B))
+print("Median PFS for Group C:{:.2f}".format(median_pfs_group_C))
+
+# 2nd part of the code to enable the user to enter new data and feed the new data back into the Google sheet
+
 # Prompt user for new data input
 # Validation of user input (valid data for "time" 0-15 with max.1 decimal place and "event" valid data either 0 or 1)
 new_data = input("Please enter new survival data")
@@ -92,8 +164,6 @@ for i in range(13):
     else:
         new_data_c.append((time_c, event_c))
 
-#Load the data from the Google Excel sheet into a DataFrame
-data = get_data_from_sheet()
 
 # Replace existing data with new user input for all rows:
 for i in range(13):
@@ -125,70 +195,3 @@ for i in range(13):
 worksheet = SHEET.worksheet('ABC')
 worksheet.update([data.columns.values.tolist()]+data.values.tolist())
 
-# Create the Kaplan-Meier object and fit the data
-kmf = KaplanMeierFitter()
-kmf.fit(data['Time'], data['Event'], label='Overall Survival')
-
-# Split the data by groups
-groups = data['Group'].unique()
-
-# Create a new figure
-fig,ax = plt.subplots()
-
-# Plot seperate curves for each group
-for group in groups:
-    group_data = data[data['Group'] == group]
-    kmf.fit(group_data['Time'],group_data['Event'], label=group)
-    kmf.plot(ax=ax)
-
-# set labels and title for the plot
-ax.set_xlabel('Time')
-ax.set_ylabel('Survival Probability')
-ax.set_title('Kaplan-Meier Curve')
-
-# display legend
-ax.legend()
-
-# save and display the plot
-plt.savefig('km_plot.png')
-plt.show()
-
-# Convert 'Time' and 'Event' columns to numeric types if needed
-data['Time'] = pd.to_numeric(data['Time'], errors='coerce')
-data['Event'] = pd.to_numeric(data['Event'], errors='coerce')
-
-# Drop rows with missing values
-data = data.dropna(subset=['Time', 'Event'])
-
-# Calculate the median PFS for each group
-event = 'Event'
-
-group_A_data = data[data['Group Value'] == 1]
-group_B_data = data[data['Group Value'] == 2]
-group_C_data = data[data['Group Value'] == 3]
-
-median_pfs_group_A = kmf.fit(group_A_data['Time'], group_A_data[event]).median_survival_time_
-median_pfs_group_B = kmf.fit(group_B_data['Time'], group_B_data[event]).median_survival_time_
-median_pfs_group_C = kmf.fit(group_C_data['Time'], group_C_data[event]).median_survival_time_
-
-
-# print the result
-print("Median PFS for Group A:{:.2f}".format(median_pfs_group_A))
-print("Median PFS for Group B:{:.2f}".format(median_pfs_group_B))
-print("Median PFS for Group C:{:.2f}".format(median_pfs_group_C))
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
