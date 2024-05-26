@@ -19,7 +19,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('Kaplan-Meier')
 
-# First part of the code to draw a Kaplan-Meier curve form the existing data in the Google sheet and calculated mPFS 
+# First part Kaplan-Meier curve from data in Google sheet and mPFS calculation  
 
 # Function to retrieve data from the Google Excelsheet
 def get_data_from_sheet():
@@ -96,10 +96,10 @@ print("Median PFS for Group A:{:.2f}".format(median_pfs_group_A))
 print("Median PFS for Group B:{:.2f}".format(median_pfs_group_B))
 print("Median PFS for Group C:{:.2f}".format(median_pfs_group_C))
 
-# 2nd part of the code to enable the user to enter new data, re-plot the Kaplan-Meier curve with new data and feed the new data back into the Google sheet
+# 2nd part:user to enter new data, re-plot KM plot, feed the new data back to the Google sheet
 
 # Prompt user for new data input
-# Validation of user input (valid data for "time" 0-15 with max.1 decimal place and "event" valid data either 0 or 1)
+# Validation user input "time" 0-15 with max.1 dec. place; "event"either 0 or 1
 data_str = input("Enter your data here:\n")
 new_data_a = [(None, None)] * 13
 new_data_b = [(None, None)] * 13

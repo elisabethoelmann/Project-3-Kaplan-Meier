@@ -130,10 +130,14 @@ In order to achieve these task, the following libraries and packages have been i
 The Google spreadsheet has been created under my google account:
 (https://docs.google.com/spreadsheets/d/1qxd4Mb-30sNThwT4Hs2rlcjlBTHtDHV4y9sqhsIFF8g/edit#gid=1921903409)
 
+
+## Validation of code with CI Python Linter
+there are still some messages coming up, but I decided for now to ignore them, becasue the code works fine and I have worked already tirelessly with ChatGPT to shorten the essential codes, whihc were too long. Now rthe comments are mainly on #comments and messages, which are all perfectly fine displayed in the terminal.
+
 ## Deployment
 
 I deployed this project by using Heroku according to the CI instructions and the deployment link is available at GitHub
-[GitHub deployed page]()
+[GitHub deployed page](https://kaplan-meier-5bbb489ee148.herokuapp.com/)
 
 ## Credits
 
