@@ -19,14 +19,14 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('Kaplan-Meier')
 
+# First part of the code to draw a Kaplan-Meier curve form the existing data in the Google sheet and calculated mPFS 
+
 # Function to retrieve data from the Google Excelsheet
 def get_data_from_sheet():
     sheet = SHEET.worksheet('ABC')
     data = sheet.get_all_records()
     df = pd.DataFrame(data)
     return df
-
-# First part of the code to draw a Kaplan-Meier curve form the existing data in the Google sheet and calculated mPFS 
 
 #Load the data from the Google Excel sheet into a DataFrame
 data = get_data_from_sheet()
